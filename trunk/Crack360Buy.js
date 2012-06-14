@@ -15,7 +15,7 @@ function _360BuyInit()
     var agt = navigator.userAgent.toLowerCase();
     _is_ie = (agt.indexOf("msie")!=-1 && document.all);
     var h = '';
-    h += '<div id="_Crack360Buy">V1.0.1';
+    h += '<div id="_Crack360Buy">V1.0.2';
     h += '<div>';
     h += ' <form id="_book" onsubmit="return false;">';
     h += '    时间间隔（ms）：<input id="_txtInt" type="text" size="4" value="200">';
@@ -200,7 +200,7 @@ function _GetPrice(str)
 	var endString = '。';
 	var startPos = str.indexOf(startString);
 	var endPos = str.indexOf(endString, startPos);
-	price = parseInt(str.substring(startPos, endPos));
+	price = parseInt(str.substring(startPos + 5, endPos));
 	return price;
 }
 
