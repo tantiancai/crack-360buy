@@ -6,8 +6,7 @@ var _isStarted = false;
 var _isError = false;
 var _xmlhttp;
 var _itemInfo;
-var _id;
-var _img;
+var _oldPrice = 0;
 var _skus = new Array();
 
 function _360BuyInit()
@@ -139,29 +138,40 @@ function _getXmlHttp(url, para, callback)
 
 function _BookCheck()
 {
-	var time = new Date();
-	if(_img)
+	//秒杀未开始
+	if(_isStated != true)
 	{
-		_img.src = 'http://price.360buyimg.com/gp' + _id + ',1.png?timeStamp=' + time.getTime();
-		document.getElementById("_autoBook").innerHTML = "正在查询：<br />" + time.toLocaleString();
+		_getXmlHttp(location.href, "", _CheckResult);
 	}
 }
 
 function _CheckResult(str)
 {
-	if( str.indexOf("您查看的宝贝不存在") > 0)
+	if(_oldPrice == 0)
 	{
-		clearInterval(_intervalProcess);
-		_isError = true;
-		_ShowError("无法显示商品，可能刷新太频繁");
+		_oldPrice = _GetPrice(str);
 	}
-	
-    if( str.indexOf("btn-wait") < 0 && _isError == false)
-    {
-        _isStarted = true;
-        clearInterval(_intervalProcess);
-        _Book(str);
-    }
+	else
+	{
+		var price = _GetPrice(str);
+		if(price != _oldPrice)
+		{
+			_isStarted = true;
+        	clearInterval(_intervalProcess);
+        	location.href = 'http://jd2008.360buy.com/purchase/InitCart.aspx?pid=' + _id + '&pcount=1&ptype=1';
+		}
+	}
+
+}
+
+function _GetPrice(str)
+{
+	var startString = '京东价：￥';
+	var endString = '。';
+	var startPos = str.indexOf(startString);
+	var endPos = str.indexOf(endString, startPos);
+	price = parseInt(str.substring(startPos, endPos));
+	return price;
 }
 
 function _Book(str)
@@ -254,13 +264,6 @@ function _StopAutoBook()
 
 function _AutoBook()
 {
-	var intTime = document.getElementById("_txtInt").value;
-	var url = location.href;
-	var arr = url.split('/');
-	var page = arr[arr.length - 1];
-	arr = page.split('/');
-	_id = arr[0];
-	_img = $(".price")[0].children[0];
 	_isStarted = false;
     clearInterval(_intervalProcess);
 	_intervalProcess = setInterval(_BookCheck, intTime);
