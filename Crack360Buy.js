@@ -1,38 +1,37 @@
-﻿var _Taobao_is_ie = true;
-var _Taobao_layer;
+﻿var _is_ie = true;
+var _360Buy_layer;
 var _ErrorNum;
 var _intervalProcess;
-var _isStated = false;
+var _isStarted = false;
 var _isError = false;
 var _xmlhttp;
 var _itemInfo;
 var _skus = new Array();
 
-function _TaobaoInit()
+function _360BuyInit()
 {
     var agt = navigator.userAgent.toLowerCase();
-    _Taobao_is_ie = (agt.indexOf("msie")!=-1 && document.all);
+    _is_ie = (agt.indexOf("msie")!=-1 && document.all);
     var h = '';
-    h += '<div id="_CrackJLPT2010_12">V4.2';
+    h += '<div id="_Crack360Buy">V1.0';
     h += '<div>';
     h += ' <form id="_book" onsubmit="return false;">';
     h += '    时间间隔（ms）：<input id="_txtInt" type="text" size="4" value="200">';
     h += '    <br />';
     h += '    <input id="_btnAutoBook" onclick="_AutoBook();" type="submit" value="开始查询">';
     h += '    <input id="_btnStop" onclick="_StopAutoBook();" type="button" value="停止">';
-    h += '    <input id="_btnBuy" onclick="_Buy();" style="display:none;" type="button" value="购买">';
     h += ' </form>';
     h += '</div>';
     h += '<div id="_autoBook">';
     h += '</div>';
     h += '<div id="_errorMsg">';
-    h += ' 查询到开始秒杀后会自动显示购买信息';
+    h += ' ';
     h += '</div>';
     h += '</div>';
     try
     {
         var el = document.createElement('div');
-        el.id='_Taobao_layer';
+        el.id='_360Buy_layer';
         el.style.position='absolute';
         el.style.left = document.documentElement.scrollLeft + 3 + 'px';
         el.style.top = document.documentElement.scrollTop + 30 + 'px';
@@ -44,18 +43,18 @@ function _TaobaoInit()
         _TaobaoSet(el, h);
         //window.onscroll = function()
         //{
-            //document.getElementById("_Taobao_layer").style.left = document.documentElement.scrollLeft + 3 + 'px';
-            //document.getElementById("_Taobao_layer").style.top = document.documentElement.scrollTop + 30 + 'px';
+            //document.getElementById("_360Buy_layer").style.left = document.documentElement.scrollLeft + 3 + 'px';
+            //document.getElementById("_360Buy_layer").style.top = document.documentElement.scrollTop + 30 + 'px';
         //};
     }
     catch(x)
     {
         alert("Crack Tabobao can not support this page.\n" + x);
-        _Taobao_layer = true;
+        _360Buy_layer = true;
         return;
     }
 
-	_Taobao_layer = document.getElementById('_Taobao_layer');
+	_360Buy_layer = document.getElementById('_360Buy_layer');
 }
 
 function _ShowError(str)
@@ -138,10 +137,14 @@ function _getXmlHttp(url, para, callback)
 
 function _BookCheck()
 {
-	//秒杀未开始
-	if(_isStated != true)
+	var url = location.href;
+	var arr = url.split('/');
+	var page = arr[arr.length - 1];
+	arr = page.split('/');
+	var id = arr[0];
+	if($(".price"))
 	{
-		_getXmlHttp(location.href, "", _CheckResult);
+		alert('success');
 	}
 }
 
@@ -156,7 +159,7 @@ function _CheckResult(str)
 	
     if( str.indexOf("btn-wait") < 0 && _isError == false)
     {
-        _isStated = true;
+        _isStarted = true;
         clearInterval(_intervalProcess);
         _Book(str);
     }
@@ -243,39 +246,17 @@ function _InitPage(str, div)
 	}
 }
 
-function _Buy()
-{
-	var sku = "";
-	var skuId;
-	if(_skus.length > 0)
-	{
-		sku = ";" + _skus.join(";") + ";";
-		try
-		{
-			skuId = _itemInfo.valItemInfo.skuMap[sku].skuId;
-			document.getElementById("J_FrmBid").skuId.value = skuId;
-		}
-		catch(e)
-		{
-			_ShowError("请从上到下顺序点击");
-			_skus = [];
-			return;
-		}
-	}
-	document.getElementById("J_FrmBid").submit();
-}
-
 function _StopAutoBook()
 {
     clearInterval(_intervalProcess);
-    _isStated = false;
+    _isStarted = false;
     _ShowError("已停止");
 }
 
 function _AutoBook()
 {
 	var intTime = document.getElementById("_txtInt").value;
-	_isStated = false;
+	_isStarted = false;
     clearInterval(_intervalProcess);
 	_intervalProcess = setInterval(_BookCheck, intTime);
 }
@@ -305,15 +286,15 @@ function _TaobaoSet(el, htmlCode)
     }
 }
 
-if(!document.getElementById('_Taobao_layer'))
+if(!document.getElementById('_Crack360Buy'))
 {
-    _TaobaoInit();
+    _360BuyInit();
 }
 else
 {
-    document.body.removeChild(document.getElementById('_Taobao_layer'));
-    _TaobaoInit();
+    document.body.removeChild(document.getElementById('_Crack360Buy'));
+    _360BuyInit();
 }
 
-//javascript:void((function(){var%20element=document.createElement('script');element.setAttribute('src','file:///D:/CrackTaobao.js');document.body.appendChild(element);})())
+//javascript:void((function(){var%20element=document.createElement('script');element.setAttribute('src','http://crack-360buy.googlecode.com/svn/trunk/Crack360Buy.js');document.body.appendChild(element);})())
 
