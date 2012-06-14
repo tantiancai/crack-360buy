@@ -116,12 +116,19 @@ function _getXmlHttp(url, para, callback)
     {
         return;
     }
-
+    if(para != "")
+    {
+		para += "&timeStamp=" + time.getTime();
+	}
+	else
+	{
+		para = "timeStamp=" + time.getTime();
+	}
 	if(url.indexOf("#") > 0)
 	{
 		url = url.substring(0, url.indexOf("#"));
 	}
-    _xmlhttp.open("GET", url + "&timeStamp=" + time.getTime(), true);
+    _xmlhttp.open("POST", url, true);
 
     _xmlhttp.onreadystatechange = function ()
     {
