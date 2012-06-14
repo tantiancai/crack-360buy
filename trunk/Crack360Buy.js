@@ -7,6 +7,7 @@ var _isError = false;
 var _xmlhttp;
 var _itemInfo;
 var _oldPrice = 0;
+var _id;
 var _skus = new Array();
 
 function _360BuyInit()
@@ -14,7 +15,7 @@ function _360BuyInit()
     var agt = navigator.userAgent.toLowerCase();
     _is_ie = (agt.indexOf("msie")!=-1 && document.all);
     var h = '';
-    h += '<div id="_Crack360Buy">V1.0';
+    h += '<div id="_Crack360Buy">V1.0.1';
     h += '<div>';
     h += ' <form id="_book" onsubmit="return false;">';
     h += '    时间间隔（ms）：<input id="_txtInt" type="text" size="4" value="200">';
@@ -158,7 +159,36 @@ function _CheckResult(str)
 		{
 			_isStarted = true;
         	clearInterval(_intervalProcess);
-        	location.href = 'http://jd2008.360buy.com/purchase/InitCart.aspx?pid=' + _id + '&pcount=1&ptype=1';
+        	$.ajax(
+            {
+            	url: "http://buy.360buy.com/purchase/flows/easybuy/FlowService.ashx",
+                type: "get",
+                data: {
+                	action: "SubmitOrderByDefaultTemplate",
+                    skuId: _id,
+                    num: $("#pamount").val()
+                },
+                dataType: "jsonp",
+                success: function (r)
+                {
+                	if (r.Flag)
+                    {
+                    	window.location = r.Obj;
+                    }
+                    else
+                 	{
+                     	$(".btn-easy").show();
+                     	if (r.Message != null)
+                     	{
+                         	alert(r.Message);
+                     	}
+                     	else
+                     	{
+                         	alert("暂时无法提交,请您稍后重试!");
+                     	}
+                 	}
+             	}
+        	})
 		}
 	}
 
@@ -264,6 +294,10 @@ function _StopAutoBook()
 
 function _AutoBook()
 {
+	var url = location.href;
+	var arr = url.split('/');
+	var page = arr[arr.length - 1];
+	_id = page.split('.')[0];
 	var intTime = document.getElementById("_txtInt").value;
 	_isStated = false;
     clearInterval(_intervalProcess);
