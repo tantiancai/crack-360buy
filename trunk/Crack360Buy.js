@@ -264,7 +264,8 @@ function _StopAutoBook()
 
 function _AutoBook()
 {
-	_isStarted = false;
+	var intTime = document.getElementById("_txtInt").value;
+	_isStated = false;
     clearInterval(_intervalProcess);
 	_intervalProcess = setInterval(_BookCheck, intTime);
 }
