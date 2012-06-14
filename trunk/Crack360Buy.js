@@ -142,7 +142,7 @@ function _BookCheck()
 	//秒杀未开始
 	if(_isStated != true)
 	{
-		_getXmlHttp(location.href, "", _CheckResult);
+		_getXmlHttp('http://simigoods.360buy.com/ThreeCCombineBuying/CombineBuying.aspx?wids=' + _id, "", _CheckResult);
 	}
 }
 
@@ -155,7 +155,7 @@ function _CheckResult(str)
 	else
 	{
 		var price = _GetPrice(str);
-		if(price != _oldPrice)
+		if(price < _oldPrice && _isStarted == false)
 		{
 			_isStarted = true;
         	clearInterval(_intervalProcess);
@@ -188,7 +188,7 @@ function _CheckResult(str)
                      	}
                  	}
              	}
-        	})
+        	});
 		}
 	}
 
@@ -196,11 +196,20 @@ function _CheckResult(str)
 
 function _GetPrice(str)
 {
-	var startString = '京东价：￥';
-	var endString = '。';
+	var startString = '[{';
+	var endString = '}]';
 	var startPos = str.indexOf(startString);
 	var endPos = str.indexOf(endString, startPos);
-	price = parseInt(str.substring(startPos + 5, endPos));
+	var prices = eval('('+str.substring(startPos, endPos + 2)+')');
+	var price = 0;
+	for(i in prices)
+	{
+		if(prices[i].Wid == _id)
+		{
+			price = prices[i].WMeprice;
+			break;
+		}
+	}
 	return price;
 }
 
