@@ -149,7 +149,7 @@ function _BookCheck()
 	//秒杀未开始
 	if(_isStated != true)
 	{
-		_getXmlHttp('http://simigoods.360buy.com/ThreeCCombineBuying/CombineBuying.aspx?wids=' + _id, "", _CheckResult);
+		_getXmlHttp('http://simigoods.360buy.com/ThreeCCombineBuying/CombineBuying.aspx?wids=' + _id + '&callback=ThreeCCombineBuyingCallback', "", _CheckResult);
 	}
 }
 
