@@ -6,6 +6,7 @@ var _isStarted = false;
 var _isError = false;
 var _xmlhttp;
 var _itemInfo;
+var _img;
 var _skus = new Array();
 
 function _360BuyInit()
@@ -41,11 +42,11 @@ function _360BuyInit()
 
         document.body.appendChild(el);
         _TaobaoSet(el, h);
-        //window.onscroll = function()
-        //{
-            //document.getElementById("_360Buy_layer").style.left = document.documentElement.scrollLeft + 3 + 'px';
-            //document.getElementById("_360Buy_layer").style.top = document.documentElement.scrollTop + 30 + 'px';
-        //};
+        window.onscroll = function()
+        {
+            document.getElementById("_360Buy_layer").style.left = document.documentElement.scrollLeft + 3 + 'px';
+            document.getElementById("_360Buy_layer").style.top = document.documentElement.scrollTop + 30 + 'px';
+        };
     }
     catch(x)
     {
@@ -137,12 +138,7 @@ function _getXmlHttp(url, para, callback)
 
 function _BookCheck()
 {
-	var url = location.href;
-	var arr = url.split('/');
-	var page = arr[arr.length - 1];
-	arr = page.split('/');
-	var id = arr[0];
-	if($(".price"))
+	if(_img)
 	{
 		alert('success');
 	}
@@ -256,6 +252,12 @@ function _StopAutoBook()
 function _AutoBook()
 {
 	var intTime = document.getElementById("_txtInt").value;
+	var url = location.href;
+	var arr = url.split('/');
+	var page = arr[arr.length - 1];
+	arr = page.split('/');
+	var id = arr[0];
+	_img = $(".price")[0].children();
 	_isStarted = false;
     clearInterval(_intervalProcess);
 	_intervalProcess = setInterval(_BookCheck, intTime);
