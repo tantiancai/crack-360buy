@@ -6,6 +6,7 @@ var _isStarted = false;
 var _isError = false;
 var _xmlhttp;
 var _itemInfo;
+var _id;
 var _img;
 var _skus = new Array();
 
@@ -140,7 +141,7 @@ function _BookCheck()
 {
 	if(_img)
 	{
-		alert('success');
+		_img.src = 'http://price.360buyimg.com/gp' + _id + ',1.png?timeStamp=' + (new Date()).getTime();
 	}
 }
 
@@ -256,7 +257,7 @@ function _AutoBook()
 	var arr = url.split('/');
 	var page = arr[arr.length - 1];
 	arr = page.split('/');
-	var id = arr[0];
+	_id = arr[0];
 	_img = $(".price")[0].children[0];
 	_isStarted = false;
     clearInterval(_intervalProcess);
