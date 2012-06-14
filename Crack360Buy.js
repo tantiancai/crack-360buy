@@ -139,9 +139,11 @@ function _getXmlHttp(url, para, callback)
 
 function _BookCheck()
 {
+	var time = new Date();
 	if(_img)
 	{
-		_img.src = 'http://price.360buyimg.com/gp' + _id + ',1.png?timeStamp=' + (new Date()).getTime();
+		_img.src = 'http://price.360buyimg.com/gp' + _id + ',1.png?timeStamp=' + time.getTime();
+		document.getElementById("_autoBook").innerHTML = "正在查询：<br />" + time.toLocaleString();
 	}
 }
 
