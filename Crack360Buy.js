@@ -140,7 +140,7 @@ function _getXmlHttp(url, para, callback)
 
     _xmlhttp.onreadystatechange = function ()
     {
-        if (_xmlhttp.readyState == 4 && _xmlhttp.status == 200)
+        if (_xmlhttp.readyState == 4 && ( _xmlhttp.status == 200 || _xmlhttp.status == 0 ))
         {
         	callback(_xmlhttp.responseText);
         }
