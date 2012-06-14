@@ -76,11 +76,18 @@ function _createXmlHttp()
     {
         try
         {
-            _xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            _xmlhttp = new ActiveXObject("MSXML2.XMLHTTP.3.0");
         }
         catch (E)
         {
-            _xmlhttp = false;
+        	try
+        	{
+        		_xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        	}
+        	catch (err)
+        	{
+            	_xmlhttp = false;
+            }
         }
     }
     if (!_xmlhttp && typeof XMLHttpRequest != 'undefined')
