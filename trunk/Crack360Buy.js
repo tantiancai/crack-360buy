@@ -67,34 +67,35 @@ function _ShowError(str)
 function _createXmlHttp()
 {
     var _xmlhttp = false;
-
-    try
+    if(window.XMLHttpRequest)
     {
-        _xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+    	_xmlhttp = new XMLHttpRequest();
     }
-    catch (e)
-    {
-        try
-        {
-            _xmlhttp = new ActiveXObject("MSXML2.XMLHTTP.3.0");
+	else
+	{
+    	try
+    	{
+        	_xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
         }
-        catch (E)
-        {
-        	try
+    	catch (e)
+    	{
+    	    try
         	{
-        		_xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	            _xmlhttp = new ActiveXObject("MSXML2.XMLHTTP.3.0");
+    	    }
+        	catch (E)
+        	{
+        		try
+        		{
+	        		_xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        		}
+	        	catch (err)
+    	    	{
+        	    	_xmlhttp = false;
+        	    }
         	}
-        	catch (err)
-        	{
-            	_xmlhttp = false;
-            }
         }
     }
-    if (!_xmlhttp && typeof XMLHttpRequest != 'undefined')
-    {
-        _xmlhttp = new XMLHttpRequest();
-    }
-
     return _xmlhttp;
 }
 
