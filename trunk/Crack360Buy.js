@@ -365,3 +365,4 @@ else
 
 //javascript:void((function(){var%20element=document.createElement('script');element.setAttribute('src','http://crack-360buy.googlecode.com/svn/trunk/Crack360Buy.js');document.body.appendChild(element);})())
 
+//javascript:void((function(){alert(document.cookie);})())
