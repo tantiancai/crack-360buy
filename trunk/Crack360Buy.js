@@ -257,7 +257,7 @@ function _AutoBook()
 	var page = arr[arr.length - 1];
 	arr = page.split('/');
 	var id = arr[0];
-	_img = $(".price")[0].children();
+	_img = $(".price")[0].find('img');
 	_isStarted = false;
     clearInterval(_intervalProcess);
 	_intervalProcess = setInterval(_BookCheck, intTime);
