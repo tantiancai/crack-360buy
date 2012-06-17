@@ -16,7 +16,7 @@ function _360BuyInit()
     var agt = navigator.userAgent.toLowerCase();
     _is_ie = (agt.indexOf("msie")!=-1 && document.all);
     var h = '';
-    h += '<div id="_Crack360Buy">V2.0.6';
+    h += '<div id="_Crack360Buy">V2.0.7';
     h += '<div>';
     h += ' <form id="_book" onsubmit="return false;">';
     h += '    时间间隔（ms）：<input id="_txtInt" type="text" size="4" value="100">';
@@ -323,6 +323,7 @@ function _StopAutoBook()
 {
     clearInterval(_intervalProcess);
     _isStarted = false;
+    _isLoad = false;
     _ShowError("已停止");
 }
 
@@ -334,6 +335,7 @@ function _AutoBook()
 	_id = page.split('.')[0];
 	var intTime = document.getElementById("_txtInt").value;
 	_isStarted = true;
+	_isLoad = true;
 	_ShowError("");
     clearInterval(_intervalProcess);
 	_intervalProcess = setInterval(_BookCheck, intTime);
