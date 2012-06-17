@@ -4,6 +4,7 @@ var _ErrorNum;
 var _intervalProcess;
 var _isStarted = false;
 var _isError = false;
+var _isLoad = false;
 var _xmlhttp;
 var _itemInfo;
 var _oldPrice = 0;
@@ -15,7 +16,7 @@ function _360BuyInit()
     var agt = navigator.userAgent.toLowerCase();
     _is_ie = (agt.indexOf("msie")!=-1 && document.all);
     var h = '';
-    h += '<div id="_Crack360Buy">V2.0.1';
+    h += '<div id="_Crack360Buy">V2.0.2';
     h += '<div>';
     h += ' <form id="_book" onsubmit="return false;">';
     h += '    时间间隔（ms）：<input id="_txtInt" type="text" size="4" value="200">';
@@ -162,6 +163,11 @@ function _BookCheck()
 	var img = $('.price').children()[0];
 	var time = new Date();
 	_ImgLoad(img, _IsImgLoad);
+	if(_isLoad == true && _isStarted == true)
+	{
+		_isLoad = false;
+		img.src = 'http://jprice.360buyimg.com/price/gp' + _id + '-1-1-1.png?' + time.getTime();
+	}
 	document.getElementById("_autoBook").innerHTML = "正在查询：<br />" + time.toLocaleString();
 }
 
@@ -172,9 +178,7 @@ function _ImgLoad(img, callback)
 
 function _IsImgLoad()
 {
-	var time = new Date();
-	var img = $('.price').children()[0];
-	img.src = 'http://jprice.360buyimg.com/price/gp' + _id + '-1-1-1.png?' + time.getTime();
+	_isLoad = true;
 }
 
 function _CheckResult(str)
@@ -339,7 +343,7 @@ function _AutoBook()
 	var page = arr[arr.length - 1];
 	_id = page.split('.')[0];
 	var intTime = document.getElementById("_txtInt").value;
-	_isStated = false;
+	_isStated = true;
     clearInterval(_intervalProcess);
 	_intervalProcess = setInterval(_BookCheck, intTime);
 }
