@@ -160,6 +160,7 @@ function _BookCheck()
 		//_getXmlHttp('http://simigoods.360buy.com/ThreeCCombineBuying/CombineBuying.aspx?wids=' + _id, "", _CheckResult);
 	//}
 	var img = $('.price').children()[0];
+	var time = new Date();
 	_ImgLoad(img, _IsImgLoad);
 	document.getElementById("_autoBook").innerHTML = "正在查询：<br />" + time.toLocaleString();
 }
