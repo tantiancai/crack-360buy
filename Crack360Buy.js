@@ -161,6 +161,7 @@ function _BookCheck()
 	//}
 	var img = $('.price').children()[0];
 	_ImgLoad(img, _IsImgLoad);
+	document.getElementById("_autoBook").innerHTML = "正在查询：<br />" + time.toLocaleString();
 }
 
 function _ImgLoad(img, callback)
@@ -171,7 +172,7 @@ function _ImgLoad(img, callback)
 function _IsImgLoad()
 {
 	var img = $('.price').children()[0];
-	img.src = 'http://price.360buyimg.com/gp' + _id + ',1.png';
+	img.src = 'http://price.360buyimg.com/gp' + _id + ',1.png?timeStamp=' + time.getTime();
 }
 
 function _CheckResult(str)
