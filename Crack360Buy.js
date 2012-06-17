@@ -174,7 +174,7 @@ function _IsImgLoad()
 {
 	var time = new Date();
 	var img = $('.price').children()[0];
-	img.src = 'http://price.360buyimg.com/gp' + _id + '-1-1-1.png?' + time.getTime();
+	img.src = 'http://jprice.360buyimg.com/price/gp' + _id + '-1-1-1.png?' + time.getTime();
 }
 
 function _CheckResult(str)
