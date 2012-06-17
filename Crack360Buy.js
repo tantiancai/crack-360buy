@@ -1,4 +1,4 @@
-﻿var _is_ie = true;
+ var _is_ie = true;
 var _360Buy_layer;
 var _ErrorNum;
 var _intervalProcess;
@@ -154,11 +154,24 @@ function _getXmlHttp(url, para, callback)
 
 function _BookCheck()
 {
-	//秒杀未开始
-	if(_isStated != true)
-	{
-		_getXmlHttp('http://simigoods.360buy.com/ThreeCCombineBuying/CombineBuying.aspx?wids=' + _id + '&callback=ThreeCCombineBuyingCallback', "", _CheckResult);
-	}
+		//秒杀未开始
+	//if(_isStated != true)
+	//{
+		//_getXmlHttp('http://simigoods.360buy.com/ThreeCCombineBuying/CombineBuying.aspx?wids=' + _id, "", _CheckResult);
+	//}
+	var img = $('.price').children()[0];
+	_ImgLoad(img, _IsImgLoad);
+}
+
+function _ImgLoad(img, callback)
+{
+   img.complete || img.readyState == 'loading' || img.readyState == 'complete' ? callback() : img.onload = callback;
+}
+
+function _IsImgLoad()
+{
+	var img = $('.price').children()[0];
+	img.src = 'http://price.360buyimg.com/gp' + _id + ',1.png';
 }
 
 function _CheckResult(str)
