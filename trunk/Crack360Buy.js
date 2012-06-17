@@ -173,15 +173,21 @@ function _BookCheck()
 
 function _ImgLoad(img, callback)
 {
-   img.complete || img.readyState == 'loading' || img.readyState == 'complete' ? callback() : img.onload = callback;
-   if(_is_ie)
-   {
-   	   img.readyState == 'loading' || img.readyState == 'complete' ? callback() : img.onload = callback;
-   }
-   else
-   {
-   	   img.complete || img.readyState == 'loading' || img.readyState == 'complete' ? callback() : img.onload = callback;
-   }
+   	img.complete || img.readyState == 'loading' || img.readyState == 'complete' ? callback() : img.onload = callback;
+   	if(_is_ie)
+	{
+   	   	if(img.readyState == 'loading' || img.readyState == 'complete')
+		{
+			callback();
+		}
+   	}
+   	else
+   	{
+   		if(img.complete || img.readyState == 'loading' || img.readyState == 'complete')
+   		{
+   			callback();
+   		}
+   	}
 }
 
 function _IsImgLoad()
