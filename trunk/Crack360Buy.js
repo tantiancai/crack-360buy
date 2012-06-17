@@ -18,10 +18,10 @@ function _360BuyInit()
     h += '<div id="_Crack360Buy">V2.0';
     h += '<div>';
     h += ' <form id="_book" onsubmit="return false;">';
-    h += '    æ—¶é—´é—´éš”ï¼ˆmsï¼‰ï¼š<input id="_txtInt" type="text" size="4" value="200">';
+    h += '    Ê±¼ä¼ä¸ô£¨ms£©£º<input id="_txtInt" type="text" size="4" value="200">';
     h += '    <br />';
-    h += '    <input id="_btnAutoBook" onclick="_AutoBook();" type="submit" value="å¼€å§‹æŸ¥è¯¢">';
-    h += '    <input id="_btnStop" onclick="_StopAutoBook();" type="button" value="åœæ­¢">';
+    h += '    <input id="_btnAutoBook" onclick="_AutoBook();" type="submit" value="¿ªÊ¼²éÑ¯">';
+    h += '    <input id="_btnStop" onclick="_StopAutoBook();" type="button" value="Í£Ö¹">';
     h += ' </form>';
     h += '</div>';
     h += '<div id="_autoBook">';
@@ -149,12 +149,12 @@ function _getXmlHttp(url, para, callback)
     _xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     _xmlhttp.send(para);
     
-    document.getElementById("_autoBook").innerHTML = "æ­£åœ¨æŸ¥è¯¢ï¼š<br />" + time.toLocaleString();
+    document.getElementById("_autoBook").innerHTML = "ÕıÔÚ²éÑ¯£º<br />" + time.toLocaleString();
 }
 
 function _BookCheck()
 {
-		//ç§’æ€æœªå¼€å§‹
+	//ÃëÉ±Î´¿ªÊ¼
 	//if(_isStated != true)
 	//{
 		//_getXmlHttp('http://simigoods.360buy.com/ThreeCCombineBuying/CombineBuying.aspx?wids=' + _id, "", _CheckResult);
@@ -162,7 +162,7 @@ function _BookCheck()
 	var img = $('.price').children()[0];
 	var time = new Date();
 	_ImgLoad(img, _IsImgLoad);
-	document.getElementById("_autoBook").innerHTML = "æ­£åœ¨æŸ¥è¯¢ï¼š<br />" + time.toLocaleString();
+	document.getElementById("_autoBook").innerHTML = "ÕıÔÚ²éÑ¯£º<br />" + time.toLocaleString();
 }
 
 function _ImgLoad(img, callback)
@@ -215,7 +215,7 @@ function _CheckResult(str)
                      	}
                      	else
                      	{
-                         	alert("æš‚æ—¶æ— æ³•æäº¤,è¯·æ‚¨ç¨åé‡è¯•!");
+                         	alert("ÔİÊ±ÎŞ·¨Ìá½»,ÇëÄúÉÔºóÖØÊÔ!");
                      	}
                  	}
              	}
@@ -251,13 +251,13 @@ function _Book(str)
 	var html;
 	var form;
 	var dls;
-	_ShowError("è¯·è®¾ç½®è´­ä¹°ä¿¡æ¯");
+	_ShowError("ÇëÉèÖÃ¹ºÂòĞÅÏ¢");
 	start = str.indexOf('<div class="key');
 	end = str.indexOf('<ul class="other');
 	html = str.substring(start, end);
 	if(html != "")
 	{
-		//è¦å›ç­”é—®é¢˜çš„ç§’æ€
+		//Òª»Ø´ğÎÊÌâµÄÃëÉ±
 		document.getElementById("_autoBook").innerHTML = html;
 		document.getElementById("_btnBuy").style.display = "inline";
 		dls = document.getElementById("_autoBook").getElementsByTagName("dl");
@@ -267,10 +267,10 @@ function _Book(str)
 		//start = form.indexOf('<input');
 		//end = form.indexOf('</form>');
 		//form = form.substring(start, end);
-		//é—®é¢˜ï¼šâ€œé—®å›èƒ½æœ‰å‡ å¤šæ„â€è¯—å¥çš„ä¸‹å¥æ˜¯ï¼šæ°ä¼¼ä¸€æ±Ÿæ˜¥æ°´å‘ä¸œæµ
+		//ÎÊÌâ£º¡°ÎÊ¾ıÄÜÓĞ¼¸¶à³î¡±Ê«¾äµÄÏÂ¾äÊÇ£ºÇ¡ËÆÒ»½­´ºË®Ïò¶«Á÷
 		var question = '<input type="hidden" name="82cbc720f1cd8e8b3bd5982bf368de58" value="cf7cdf247800a0ba51337b340aa2632d" />';
 		document.getElementById("J_FrmBid").innerHTML += question;
-		//å¦‚æœåªæœ‰æ•°é‡åˆ™ç›´æ¥æäº¤
+		//Èç¹ûÖ»ÓĞÊıÁ¿ÔòÖ±½ÓÌá½»
 		if(dls.length > 1)
 		{
 			_InitPage(str, document.getElementById("_autoBook"));
@@ -282,7 +282,7 @@ function _Book(str)
 	}
 	else
 	{
-		//ä¸è¦å›ç­”é—®é¢˜çš„ç§’æ€
+		//²»Òª»Ø´ğÎÊÌâµÄÃëÉ±
 		start = str.indexOf('<div class="tb-key');
 		end = str.indexOf('<ul class="tb-other');
 		html = str.substring(start, end);
@@ -291,7 +291,7 @@ function _Book(str)
 			document.getElementById("_autoBook").innerHTML = html;
 			document.getElementById("_btnBuy").style.display = "inline";
 			dls = document.getElementById("_autoBook").getElementsByTagName("dl");
-			//å¦‚æœåªæœ‰æ•°é‡åˆ™ç›´æ¥æäº¤
+			//Èç¹ûÖ»ÓĞÊıÁ¿ÔòÖ±½ÓÌá½»
 			if(dls.length > 1)
 			{
 				_InitPage(str, document.getElementById("_autoBook"));
@@ -329,7 +329,7 @@ function _StopAutoBook()
 {
     clearInterval(_intervalProcess);
     _isStarted = false;
-    _ShowError("å·²åœæ­¢");
+    _ShowError("ÒÑÍ£Ö¹");
 }
 
 function _AutoBook()
