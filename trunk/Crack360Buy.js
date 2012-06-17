@@ -1,4 +1,4 @@
- var _is_ie = true;
+var _is_ie = true;
 var _360Buy_layer;
 var _ErrorNum;
 var _intervalProcess;
