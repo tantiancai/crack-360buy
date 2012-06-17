@@ -15,7 +15,7 @@ function _360BuyInit()
     var agt = navigator.userAgent.toLowerCase();
     _is_ie = (agt.indexOf("msie")!=-1 && document.all);
     var h = '';
-    h += '<div id="_Crack360Buy">V1.0.2';
+    h += '<div id="_Crack360Buy">V2.0';
     h += '<div>';
     h += ' <form id="_book" onsubmit="return false;">';
     h += '    时间间隔（ms）：<input id="_txtInt" type="text" size="4" value="200">';
@@ -171,6 +171,7 @@ function _ImgLoad(img, callback)
 
 function _IsImgLoad()
 {
+	var time = new Date();
 	var img = $('.price').children()[0];
 	img.src = 'http://price.360buyimg.com/gp' + _id + ',1.png?timeStamp=' + time.getTime();
 }
