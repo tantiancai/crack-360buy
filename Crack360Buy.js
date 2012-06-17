@@ -16,7 +16,7 @@ function _360BuyInit()
     var agt = navigator.userAgent.toLowerCase();
     _is_ie = (agt.indexOf("msie")!=-1 && document.all);
     var h = '';
-    h += '<div id="_Crack360Buy">V2.0.2';
+    h += '<div id="_Crack360Buy">V2.0.3';
     h += '<div>';
     h += ' <form id="_book" onsubmit="return false;">';
     h += '    时间间隔（ms）：<input id="_txtInt" type="text" size="4" value="200">';
@@ -156,7 +156,7 @@ function _getXmlHttp(url, para, callback)
 function _BookCheck()
 {
 	//秒杀未开始
-	//if(_isStated != true)
+	//if(_isStarted != true)
 	//{
 		//_getXmlHttp('http://simigoods.360buy.com/ThreeCCombineBuying/CombineBuying.aspx?wids=' + _id, "", _CheckResult);
 	//}
@@ -343,7 +343,7 @@ function _AutoBook()
 	var page = arr[arr.length - 1];
 	_id = page.split('.')[0];
 	var intTime = document.getElementById("_txtInt").value;
-	_isStated = true;
+	_isStarted = true;
     clearInterval(_intervalProcess);
 	_intervalProcess = setInterval(_BookCheck, intTime);
 }
