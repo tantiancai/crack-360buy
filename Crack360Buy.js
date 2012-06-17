@@ -15,7 +15,7 @@ function _360BuyInit()
     var agt = navigator.userAgent.toLowerCase();
     _is_ie = (agt.indexOf("msie")!=-1 && document.all);
     var h = '';
-    h += '<div id="_Crack360Buy">V2.0';
+    h += '<div id="_Crack360Buy">V2.0.1';
     h += '<div>';
     h += ' <form id="_book" onsubmit="return false;">';
     h += '    Ê±¼ä¼ä¸ô£¨ms£©£º<input id="_txtInt" type="text" size="4" value="200">';
@@ -174,7 +174,7 @@ function _IsImgLoad()
 {
 	var time = new Date();
 	var img = $('.price').children()[0];
-	img.src = 'http://price.360buyimg.com/gp' + _id + '-1-1-1.png?' + time.toLocaleString();
+	img.src = 'http://price.360buyimg.com/gp' + _id + '-1-1-1.png?' + time.getTime();
 }
 
 function _CheckResult(str)
