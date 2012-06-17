@@ -379,3 +379,6 @@ else
 //javascript:void((function(){var%20element=document.createElement('script');element.setAttribute('src','http://crack-360buy.googlecode.com/svn/trunk/Crack360Buy.js');document.body.appendChild(element);})())
 
 //javascript:void((function(){alert(document.cookie);})())
+
+//http://gate.360buy.com/InitCart.aspx?pid=543278&pcount=1&ptype=1
+//location.href = "http://cart.360buy.com/splitCart/splitCart.action?rd="+Math.random();
