@@ -16,7 +16,7 @@ function _360BuyInit()
     var agt = navigator.userAgent.toLowerCase();
     _is_ie = (agt.indexOf("msie")!=-1 && document.all);
     var h = '';
-    h += '<div id="_Crack360Buy">V2.1.3';
+    h += '<div id="_Crack360Buy">V2.1.4';
     h += '<div>';
     h += ' <form id="_book" onsubmit="return false;">';
     h += '    Ê±¼ä¼ä¸ô£¨ms£©£º<input id="_txtInt" type="text" size="4" value="100" />';
@@ -264,7 +264,7 @@ function _Buy()
                     ptype: 1,
                     ybId: ''
                 },
-                dataType: "jsonp",
+                //dataType: "jsonp",
                 success: function (r)
                 {
                 	if (r.success)
