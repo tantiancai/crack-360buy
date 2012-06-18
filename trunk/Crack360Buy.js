@@ -258,13 +258,8 @@ function _Buy()
             {
             	url: "http://cart.360buy.com/cart/addSkuToCart.action?rd=" + Math.random(),
                 type: "POST",
-                data: {
-                	pid: _id,
-                    pcount: $('#pamount').val(),
-                    ptype: 1,
-                    ybId: ''
-                },
-                //dataType: "jsonp",
+                data: 'pid='+_id+'&pcount='+$('#pamount').val()+'&ptype=1&ybId=',
+                dataType: "json",
                 success: function (r)
                 {
                 	if (r.success)
