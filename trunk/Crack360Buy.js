@@ -16,7 +16,7 @@ function _360BuyInit()
     var agt = navigator.userAgent.toLowerCase();
     _is_ie = (agt.indexOf("msie")!=-1 && document.all);
     var h = '';
-    h += '<div id="_Crack360Buy">V2.1.2';
+    h += '<div id="_Crack360Buy">V2.1.3';
     h += '<div>';
     h += ' <form id="_book" onsubmit="return false;">';
     h += '    时间间隔（ms）：<input id="_txtInt" type="text" size="4" value="100" />';
@@ -244,6 +244,7 @@ function _GetPrice(str)
 
 function _Buy()
 {
+	/*
 	$('<iframe id="_Frame"></iframe>').appendTo($('body'));
 	$('#_Frame')[0].contentDocument.onload = function(){window.location.href = 'http://cart.360buy.com/cart/splitCart/splitCart.action?rd=' + Math.random()};
 	$('#_Frame')[0].contentDocument.onreadystatechange = function(){
@@ -252,6 +253,38 @@ function _Buy()
 			window.location.href = 'http://cart.360buy.com/cart/splitCart/splitCart.action?rd=' + Math.random();
 		}};
 	$('#_Frame')[0].src = 'http://jd2008.360buy.com/purchase/InitCart.aspx?pid=' + _id + '&pcount=' + $('#pamount').val() + '&ptype=1'
+	*/
+	$.ajax(
+            {
+            	url: "http://cart.360buy.com/cart/addSkuToCart.action?rd=" + Math.random(),
+                type: "post",
+                data: {
+                	pid: _id,
+                    pcount: $('#pamount').val(),
+                    ptype: 1,
+                    ybId: ''
+                },
+                dataType: "json",
+                success: function (r)
+                {
+                	if (r.success)
+                    {
+                    	window.location.href = 'http://cart.360buy.com/cart/splitCart/splitCart.action?rd=' + Math.random();
+                    }
+                    else
+                 	{
+                     	$(".btn-easy").show();
+                     	if (r.Message != null)
+                     	{
+                         	alert(r.Message);
+                     	}
+                     	else
+                     	{
+                         	alert("暂时无法提交,请您稍后重试!");
+                     	}
+                 	}
+             	}
+        	});
 }
 
 function _InitPage(str, div)
