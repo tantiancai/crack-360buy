@@ -16,13 +16,17 @@ function _360BuyInit()
     var agt = navigator.userAgent.toLowerCase();
     _is_ie = (agt.indexOf("msie")!=-1 && document.all);
     var h = '';
-    h += '<div id="_Crack360Buy">V2.0.7';
+    h += '<div id="_Crack360Buy">V2.1.0';
     h += '<div>';
     h += ' <form id="_book" onsubmit="return false;">';
-    h += '    时间间隔（ms）：<input id="_txtInt" type="text" size="4" value="100">';
+    h += '    时间间隔（ms）：<input id="_txtInt" type="text" size="4" value="100" />';
     h += '    <br />';
-    h += '    <input id="_btnAutoBook" onclick="_AutoBook();" type="submit" value="开始查询">';
-    h += '    <input id="_btnStop" onclick="_StopAutoBook();" type="button" value="停止">';
+    h += '    <img id="_imgPrice" />';
+    h += '    <br />';
+    h += '    <input id="_btnAutoBook" onclick="_AutoBook();" type="submit" value="开始查询" />';
+    h += '    <input id="_btnStop" onclick="_StopAutoBook();" type="button" value="停止" />';
+    h += '    <br />';
+    h += '    <input id="_btnBuy" onclick="_Buy();" type="button" value="购买" />';
     h += ' </form>';
     h += '</div>';
     h += '<div id="_autoBook">';
@@ -160,7 +164,7 @@ function _BookCheck()
 	//{
 		//_getXmlHttp('http://simigoods.360buy.com/ThreeCCombineBuying/CombineBuying.aspx?wids=' + _id, "", _CheckResult);
 	//}
-	var img = $('.price').children()[0];
+	var img = $('#_imgPrice')[0];
 	var time = new Date();
 	img.onload = function(){_isLoad = true;};
 	if(_isLoad == true && _isStarted == true)
@@ -238,69 +242,9 @@ function _GetPrice(str)
 	return price;
 }
 
-function _Book(str)
+function _Buy()
 {
-	var start;
-	var end;
-	var html;
-	var form;
-	var dls;
-	_ShowError("请设置购买信息");
-	start = str.indexOf('<div class="key');
-	end = str.indexOf('<ul class="other');
-	html = str.substring(start, end);
-	if(html != "")
-	{
-		//要回答问题的秒杀
-		document.getElementById("_autoBook").innerHTML = html;
-		document.getElementById("_btnBuy").style.display = "inline";
-		dls = document.getElementById("_autoBook").getElementsByTagName("dl");
-		//start = str.indexOf('<form id="J_FrmBid');
-		//end = str.indexOf('detail-other end');
-		//form = str.substring(start, end);
-		//start = form.indexOf('<input');
-		//end = form.indexOf('</form>');
-		//form = form.substring(start, end);
-		//问题：“问君能有几多愁”诗句的下句是：恰似一江春水向东流
-		var question = '<input type="hidden" name="82cbc720f1cd8e8b3bd5982bf368de58" value="cf7cdf247800a0ba51337b340aa2632d" />';
-		document.getElementById("J_FrmBid").innerHTML += question;
-		//如果只有数量则直接提交
-		if(dls.length > 1)
-		{
-			_InitPage(str, document.getElementById("_autoBook"));
-		}
-		else
-		{
-			_Buy();
-		}
-	}
-	else
-	{
-		//不要回答问题的秒杀
-		start = str.indexOf('<div class="tb-key');
-		end = str.indexOf('<ul class="tb-other');
-		html = str.substring(start, end);
-		if (html != "")
-		{
-			document.getElementById("_autoBook").innerHTML = html;
-			document.getElementById("_btnBuy").style.display = "inline";
-			dls = document.getElementById("_autoBook").getElementsByTagName("dl");
-			//如果只有数量则直接提交
-			if(dls.length > 1)
-			{
-				_InitPage(str, document.getElementById("_autoBook"));
-			}
-			else
-			{
-				_Buy();
-			}
-		}
-		else
-		{
-			document.getElementById("_autoBook").innerText = str;
-		}
-	}
-	//window.location.reload();
+	$('<iframe id="_Frame"></iframe>').appendTo($('body'));
 }
 
 function _InitPage(str, div)
