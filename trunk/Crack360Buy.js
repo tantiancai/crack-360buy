@@ -264,7 +264,7 @@ function _Buy()
                     ptype: 1,
                     ybId: ''
                 },
-                dataType: "json",
+                dataType: "jsonp",
                 success: function (r)
                 {
                 	if (r.success)
