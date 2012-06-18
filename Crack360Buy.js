@@ -245,8 +245,8 @@ function _GetPrice(str)
 function _Buy()
 {
 	$('<iframe id="_Frame"></iframe>').appendTo($('body'));
-	$('#_Frame')[0].onload = function(){window.location.href = 'http://cart.360buy.com/cart/splitCart/splitCart.action?rd=' + Math.random()};
-	$('#_Frame')[0].onreadystatechange = function(){
+	$('#_Frame')[0].contentDocument.onload = function(){window.location.href = 'http://cart.360buy.com/cart/splitCart/splitCart.action?rd=' + Math.random()};
+	$('#_Frame')[0].contentDocument.onreadystatechange = function(){
 		if (!this.readyState || this.readyState === "loaded" || this.readyState === "complete")
 		{
 			window.location.href = 'http://cart.360buy.com/cart/splitCart/splitCart.action?rd=' + Math.random();
