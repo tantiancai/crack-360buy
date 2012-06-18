@@ -16,7 +16,7 @@ function _360BuyInit()
     var agt = navigator.userAgent.toLowerCase();
     _is_ie = (agt.indexOf("msie")!=-1 && document.all);
     var h = '';
-    h += '<div id="_Crack360Buy">V2.1.0';
+    h += '<div id="_Crack360Buy">V2.1.1';
     h += '<div>';
     h += ' <form id="_book" onsubmit="return false;">';
     h += '    Ê±¼ä¼ä¸ô£¨ms£©£º<input id="_txtInt" type="text" size="4" value="100" />';
@@ -245,6 +245,8 @@ function _GetPrice(str)
 function _Buy()
 {
 	$('<iframe id="_Frame"></iframe>').appendTo($('body'));
+	$('#_Frame')[0].onload = function(){window.location.href = 'http://cart.360buy.com/cart/splitCart/splitCart.action?rd=' + Math.random()};
+	$('#_Frame')[0].src = 'http://jd2008.360buy.com/purchase/InitCart.aspx?pid=' + _id + '&pcount=' + $('#pamount').val() + '&ptype=1'
 }
 
 function _InitPage(str, div)
