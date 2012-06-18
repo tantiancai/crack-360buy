@@ -1,0 +1,27 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<script>
+var _is_ie = true;
+var _intervalProcess;
+var _isStarted = false;
+var _isError = false;
+var _isLoad = false;
+var _xmlhttp;
+var _itemInfo;
+var _oldPrice = 0;
+var _id;
+var _mainFrame = self.parent.frames["main"];
+</script>
+</head>
+<body>
+<label for="_txtMain">购物页面：</label><input id="_txtMain" type="text" value="http://www.360buy.com/product/482078.html" />
+<input id="_btnMain" onclick="_Open();" type="button" value="打开">
+<br />
+<label for="_txtInt">刷新间隔（ms）：</label><input id="_txtInt" type="text" size="4" value="100" />
+<input id="_btnAutoBook" onclick="_AutoBook();" type="button" value="开始查询" />
+<input id="_btnStop" onclick="_StopAutoBook();" type="button" value="停止" />
+<br />
+<input id="_btnBuy" onclick="_Buy();" type="button" value="立即购买" />
+</body>
+</html>
