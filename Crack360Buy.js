@@ -257,7 +257,7 @@ function _Buy()
 	$.ajax(
             {
             	url: "http://cart.360buy.com/cart/addSkuToCart.action?rd=" + Math.random(),
-                type: "post",
+                type: "POST",
                 data: {
                 	pid: _id,
                     pcount: $('#pamount').val(),
