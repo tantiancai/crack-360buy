@@ -6,22 +6,21 @@ var _isStarted = false;
 var _isError = false;
 var _isLoad = false;
 var _xmlhttp;
-var _itemInfo;
+var _imgData = -1;
 var _oldPrice = 0;
 var _id;
-var _skus = new Array();
 
 function _360BuyInit()
 {
     var agt = navigator.userAgent.toLowerCase();
     _is_ie = (agt.indexOf("msie")!=-1 && document.all);
     var h = '';
-    h += '<div id="_Crack360Buy">V2.1.4';
+    h += '<div id="_Crack360Buy">V3.0.0';
     h += '<div>';
     h += ' <form id="_book" onsubmit="return false;">';
     h += '    时间间隔（ms）：<input id="_txtInt" type="text" size="4" value="100" />';
     h += '    <br />';
-    h += '    <img id="_imgPrice" />';
+    h += '    <canvas id="_imgPrice" />';
     h += '    <br />';
     h += '    <input id="_btnAutoBook" onclick="_AutoBook();" type="submit" value="开始查询" />';
     h += '    <input id="_btnStop" onclick="_StopAutoBook();" type="button" value="停止" />';
@@ -159,19 +158,46 @@ function _getXmlHttp(url, para, callback)
 
 function _BookCheck()
 {
-	//秒杀未开始
-	//if(_isStarted != true)
-	//{
-		//_getXmlHttp('http://simigoods.360buy.com/ThreeCCombineBuying/CombineBuying.aspx?wids=' + _id, "", _CheckResult);
-	//}
-	var img = $('#_imgPrice')[0];
 	var time = new Date();
-	img.onload = function(){_isLoad = true;};
-	if(_isLoad == true && _isStarted == true)
+	var canvas = $('#_imgPrice')[0];
+	var context = canvas.getContext('2d');
+	var oImg = new Image();
+	oImg.style.position = "absolute";
+	oImg.style.left = "-10000px";
+	document.body.appendChild(oImg);
+	oImg.onload = function()
 	{
-		_isLoad = false;
-		img.src = 'http://jprice.360buyimg.com/price/gp' + _id + '-1-1-1.png?' + time.getTime();
+		var iWidth = this.offsetWidth;
+		var iHeight = this.offsetHeight;
+		canvas.width = iWidth;
+		canvas.height = iHeight;
+		canvas.style.width = iWidth+"px";
+		canvas.style.height = iHeight+"px";
+		context.drawImage(this, 0, 0);
+		var oData = context.getImageData(0, 0, iWidth, iHeight).data;
+		var data = 0;
+		var len = oData.length;
+		for (var i = 0;i < len; i += 4)
+		{
+			data += oData[i];
+		}
+		document.body.removeChild(oImg);
+		if(_imgData < 0)
+		{
+			_imgData = data;
+		}
+		else
+		{
+			if(_imgData != data)
+			{
+				//秒杀开始
+				_StopAutoBook();
+				_ShowError("秒杀开始");
+			}
+		}
 	}
+	oImg.src = 'http://jprice.360buyimg.com/price/gp' + _id + '-1-1-1.png?' + time.getTime();
+	
 	document.getElementById("_autoBook").innerHTML = "正在查询：<br />" + time.toLocaleString();
 }
 
@@ -286,13 +312,11 @@ function _InitPage(str, div)
 {
 	var start = str.indexOf('"valItemInfo"');
 	var strItemInfo = str.substring(start, str.indexOf('\n', start));
-	_itemInfo = eval("\({" + strItemInfo + "}\)");
 	var lis = div.getElementsByTagName("li");
 	for(li in lis)
 	{
 		lis[li].onclick = function()
 		{
-			_skus.push(this.getAttribute("data-value"));
 			this.style.fontWeight = "bold";
 		}
 	}
