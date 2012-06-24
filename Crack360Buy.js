@@ -15,7 +15,7 @@ function _360BuyInit()
     var agt = navigator.userAgent.toLowerCase();
     _is_ie = (agt.indexOf("msie")!=-1 && document.all);
     var h = '';
-    h += '<div id="_Crack360Buy">V3.0.1';
+    h += '<div id="_Crack360Buy">V3.0.2';
     h += '<div>';
     h += ' <form id="_book" onsubmit="return false;">';
     h += '    Ê±¼ä¼ä¸ô£¨ms£©£º<input id="_txtInt" type="text" size="4" value="100" />';
@@ -162,9 +162,6 @@ function _BookCheck()
 	var canvas = $('#_imgPrice')[0];
 	var context = canvas.getContext('2d');
 	var oImg = new Image();
-	oImg.style.position = "absolute";
-	oImg.style.left = "-10000px";
-	document.body.appendChild(oImg);
 	oImg.onload = function()
 	{
 		var iWidth = this.offsetWidth;
@@ -173,7 +170,7 @@ function _BookCheck()
 		canvas.height = iHeight;
 		canvas.style.width = iWidth+"px";
 		canvas.style.height = iHeight+"px";
-		context.drawImage(this, 0, 0);
+		context.drawImage(oImg, 0, 0);
 		var oData = context.getImageData(0, 0, iWidth, iHeight).data;
 		var data = 0;
 		var len = oData.length;
