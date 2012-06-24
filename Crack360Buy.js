@@ -20,7 +20,7 @@ function _360BuyInit()
     h += ' <form id="_book" onsubmit="return false;">';
     h += '    时间间隔（ms）：<input id="_txtInt" type="text" size="4" value="100" />';
     h += '    <br />';
-    h += '    <canvas id="_imgPrice" />';
+    h += '    <canvas id="_imgPrice"></canvas>';
     h += '    <br />';
     h += '    <input id="_btnAutoBook" onclick="_AutoBook();" type="submit" value="开始查询" />';
     h += '    <input id="_btnStop" onclick="_StopAutoBook();" type="button" value="停止" />';
