@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-<script src=""></script>
+<script src="jquery.js"></script>
 <script>
 var _is_ie = true;
 var _intervalProcess;
@@ -12,7 +12,58 @@ var _xmlhttp;
 var _itemInfo;
 var _oldPrice = 0;
 var _id;
-var _mainFrame = self.parent.frames["main"];
+var _mainFrame = self.parent.frames["main"].contentWindow;
+
+function _Open()
+{
+	var url = $("#_txtMain").val();
+	_mainFrame.location.href = url;
+}
+
+function _AutoBook()
+{
+	var url = $("#_txtMain").val();
+	var arr = url.split('/');
+	var page = arr[arr.length - 1];
+	_id = page.split('.')[0];
+	var intTime = $("_txtInt").val();
+	_isStarted = true;
+	_isLoad = true;
+	_ShowError("");
+    clearInterval(_intervalProcess);
+	_intervalProcess = setInterval(_BookCheck, intTime);
+}
+
+function _StopAutoBook()
+{
+    clearInterval(_intervalProcess);
+    _isStarted = false;
+    _isLoad = false;
+    _ShowError("已停止");
+}
+
+function _ShowError(str)
+{
+    $("#_errorMsg").html(str);
+}
+
+function _BookCheck()
+{
+	var img = _mainFrame.$('.price').children()[0];
+	var time = new Date();
+	img.onload = function(){_isLoad = true;};
+	if(_isLoad == true && _isStarted == true)
+	{
+		_isLoad = false;
+		img.src = 'http://jprice.360buyimg.com/price/gp' + _id + '-1-1-1.png?' + time.getTime();
+	}
+	$("#_autoBook").html("正在查询：<br />" + time.toLocaleString());
+}
+
+function _Buy()
+{
+	
+}
 </script>
 </head>
 <body>
@@ -24,5 +75,7 @@ var _mainFrame = self.parent.frames["main"];
 <input id="_btnStop" onclick="_StopAutoBook();" type="button" value="停止" />
 <br />
 <input id="_btnBuy" onclick="_Buy();" type="button" value="立即购买" />
+<div id="_autoBook"></div>
+<div id="_errorMsg"></div>
 </body>
 </html>
