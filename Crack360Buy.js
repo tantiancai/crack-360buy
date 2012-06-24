@@ -20,7 +20,7 @@ function _360BuyInit()
     h += ' <form id="_book" onsubmit="return false;">';
     h += '    时间间隔（ms）：<input id="_txtInt" type="text" size="4" value="100" />';
     h += '    <br />';
-    h += '    <canvas id="_imgPrice"></canvas>';
+    h += '    <canvas id="_imgPrice" width="55" height="12"></canvas>';
     h += '    <br />';
     h += '    <input id="_btnAutoBook" onclick="_AutoBook();" type="submit" value="开始查询" />';
     h += '    <input id="_btnStop" onclick="_StopAutoBook();" type="button" value="停止" />';
@@ -166,10 +166,6 @@ function _BookCheck()
 	{
 		var iWidth = this.offsetWidth;
 		var iHeight = this.offsetHeight;
-		canvas.width = iWidth;
-		canvas.height = iHeight;
-		canvas.style.width = iWidth+"px";
-		canvas.style.height = iHeight+"px";
 		context.drawImage(oImg, 0, 0);
 		var oData = context.getImageData(0, 0, iWidth, iHeight).data;
 		var data = 0;
@@ -178,7 +174,6 @@ function _BookCheck()
 		{
 			data += oData[i];
 		}
-		document.body.removeChild(oImg);
 		if(_imgData < 0)
 		{
 			_imgData = data;
