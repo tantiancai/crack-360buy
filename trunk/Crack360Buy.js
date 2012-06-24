@@ -12,10 +12,11 @@ var _id;
 
 function _360BuyInit()
 {
+	document.domain = "360buy.com";
     var agt = navigator.userAgent.toLowerCase();
     _is_ie = (agt.indexOf("msie")!=-1 && document.all);
     var h = '';
-    h += '<div id="_Crack360Buy">V3.0.2';
+    h += '<div id="_Crack360Buy">V3.0.3';
     h += '<div>';
     h += ' <form id="_book" onsubmit="return false;">';
     h += '    Ê±¼ä¼ä¸ô£¨ms£©£º<input id="_txtInt" type="text" size="4" value="100" />';
@@ -164,8 +165,8 @@ function _BookCheck()
 	var oImg = new Image();
 	oImg.onload = function()
 	{
-		var iWidth = this.offsetWidth;
-		var iHeight = this.offsetHeight;
+		var iWidth = this.width;
+		var iHeight = this.height;
 		context.drawImage(oImg, 0, 0);
 		var oData = context.getImageData(0, 0, iWidth, iHeight).data;
 		var data = 0;
