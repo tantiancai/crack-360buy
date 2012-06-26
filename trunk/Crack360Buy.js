@@ -12,11 +12,11 @@ var _id;
 
 function _360BuyInit()
 {
-	document.domain = "360buy.com";
+    document.domain = "360buy.com";
     var agt = navigator.userAgent.toLowerCase();
-    _is_ie = (agt.indexOf("msie")!=-1 && document.all);
+    _is_ie = (agt.indexOf("msie") != -1 && document.all);
     var h = '';
-    h += '<div id="_Crack360Buy">V3.0.3';
+    h += '<div id="_Crack360Buy">V3.0.4';
     h += '<div>';
     h += ' <form id="_book" onsubmit="return false;">';
     h += '    时间间隔（ms）：<input id="_txtInt" type="text" size="4" value="100" />';
@@ -38,30 +38,30 @@ function _360BuyInit()
     try
     {
         var el = document.createElement('div');
-        el.id='_360Buy_layer';
-        el.style.position='absolute';
+        el.id = '_360Buy_layer';
+        el.style.position = 'absolute';
         el.style.left = document.documentElement.scrollLeft + 3 + 'px';
         el.style.top = document.documentElement.scrollTop + 30 + 'px';
-        el.style.zIndex=9000;
+        el.style.zIndex = 9000;
         el.style.border = '1px solid #808080';
-        el.style.backgroundColor='#F8F0E5';
+        el.style.backgroundColor = '#F8F0E5';
 
         document.body.appendChild(el);
         _TaobaoSet(el, h);
-        window.onscroll = function()
+        window.onscroll = function ()
         {
             document.getElementById("_360Buy_layer").style.left = document.documentElement.scrollLeft + 3 + 'px';
             document.getElementById("_360Buy_layer").style.top = document.documentElement.scrollTop + 30 + 'px';
         };
     }
-    catch(x)
+    catch (x)
     {
         alert("Crack Tabobao can not support this page.\n" + x);
         _360Buy_layer = true;
         return;
     }
 
-	_360Buy_layer = document.getElementById('_360Buy_layer');
+    _360Buy_layer = document.getElementById('_360Buy_layer');
 }
 
 function _ShowError(str)
@@ -72,33 +72,33 @@ function _ShowError(str)
 function _createXmlHttp()
 {
     var _xmlhttp = false;
-    if(window.XMLHttpRequest)
+    if (window.XMLHttpRequest)
     {
-    	_xmlhttp = new XMLHttpRequest();
+        _xmlhttp = new XMLHttpRequest();
     }
-	else
-	{
-    	try
-    	{
-        	_xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+    else
+    {
+        try
+        {
+            _xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
         }
-    	catch (e)
-    	{
-    	    try
-        	{
-	            _xmlhttp = new ActiveXObject("MSXML2.XMLHTTP.3.0");
-    	    }
-        	catch (E)
-        	{
-        		try
-        		{
-	        		_xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        		}
-	        	catch (err)
-    	    	{
-        	    	_xmlhttp = false;
-        	    }
-        	}
+        catch (e)
+        {
+            try
+            {
+                _xmlhttp = new ActiveXObject("MSXML2.XMLHTTP.3.0");
+            }
+            catch (E)
+            {
+                try
+                {
+                    _xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                catch (err)
+                {
+                    _xmlhttp = false;
+                }
+            }
         }
     }
     return _xmlhttp;
@@ -106,16 +106,11 @@ function _createXmlHttp()
 
 function _checkXmlHttp()
 {
-    if ( typeof(_xmlhttp) == "undefined")
+    if (typeof (_xmlhttp) == "undefined")
     {
         _xmlhttp = _createXmlHttp();
     }
-    if (
-        ! _xmlhttp
-        || _xmlhttp.readyState == 1
-        || _xmlhttp.readyState == 2
-        || _xmlhttp.readyState == 3
-        )
+    if (!_xmlhttp || _xmlhttp.readyState == 1 || _xmlhttp.readyState == 2 || _xmlhttp.readyState == 3)
     {
         return false;
     }
@@ -124,146 +119,176 @@ function _checkXmlHttp()
 
 function _getXmlHttp(url, para, callback)
 {
-	var time = new Date();
+    var time = new Date();
     if (!_checkXmlHttp())
     {
         return;
     }
-    if(para != "")
+    if (para != "")
     {
-		para += "&timeStamp=" + time.getTime();
-	}
-	else
-	{
-		para = "timeStamp=" + time.getTime();
-	}
-	if(url.indexOf("#") > 0)
-	{
-		url = url.substring(0, url.indexOf("#"));
-	}
+        para += "&timeStamp=" + time.getTime();
+    }
+    else
+    {
+        para = "timeStamp=" + time.getTime();
+    }
+    if (url.indexOf("#") > 0)
+    {
+        url = url.substring(0, url.indexOf("#"));
+    }
     _xmlhttp.open("POST", url, true);
 
     _xmlhttp.onreadystatechange = function ()
     {
-        if (_xmlhttp.readyState == 4 && ( _xmlhttp.status == 200 || _xmlhttp.status == 0 ))
+        if (_xmlhttp.readyState == 4 && (_xmlhttp.status == 200 || _xmlhttp.status == 0))
         {
-        	callback(_xmlhttp.responseText);
+            callback(_xmlhttp.responseText);
         }
     }
 
     _xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     _xmlhttp.send(para);
-    
+
     document.getElementById("_autoBook").innerHTML = "正在查询：<br />" + time.toLocaleString();
 }
 
 function _BookCheck()
 {
-	var time = new Date();
-	var canvas = $('#_imgPrice')[0];
-	var context = canvas.getContext('2d');
-	var oImg = new Image();
-	oImg.onload = function()
-	{
-		var iWidth = this.width;
-		var iHeight = this.height;
-		context.drawImage(oImg, 0, 0);
-		var oData = context.getImageData(0, 0, iWidth, iHeight).data;
-		var data = 0;
-		var len = oData.length;
-		for (var i = 0;i < len; i += 4)
-		{
-			data += oData[i];
-		}
-		if(_imgData < 0)
-		{
-			_imgData = data;
-		}
-		else
-		{
-			if(_imgData != data)
-			{
-				//秒杀开始
-				_StopAutoBook();
-				_ShowError("秒杀开始");
-			}
-		}
-	}
-	oImg.src = 'http://jprice.360buyimg.com/price/gp' + _id + '-1-1-1.png?' + time.getTime();
-	
-	document.getElementById("_autoBook").innerHTML = "正在查询：<br />" + time.toLocaleString();
+    var time = new Date();
+    var canvas = $('#_imgPrice')[0];
+    var context = canvas.getContext('2d');
+    var oImg = new Image();
+    oImg.onload = function ()
+    {
+        var iWidth = this.width;
+        var iHeight = this.height;
+        context.drawImage(oImg, 0, 0);
+        var oData = context.getImageData(0, 0, iWidth, iHeight).data;
+        var data = 0;
+        var len = oData.length;
+        for (var i = 0; i < len; i += 4)
+        {
+            data += oData[i];
+        }
+        if (_imgData < 0)
+        {
+            _imgData = data;
+        }
+        else
+        {
+            if (_imgData != data)
+            {
+                //秒杀开始
+                $.ajax(
+                {
+                    url: "http://buy.360buy.com/purchase/flows/easybuy/FlowService.ashx",
+                    type: "get",
+                    data: {
+                        action: "SubmitOrderByDefaultTemplate",
+                        skuId: _id,
+                        num: $("#pamount").val()
+                    },
+                    dataType: "jsonp",
+                    success: function (r)
+                    {
+                        if (r.Flag)
+                        {
+                            window.location = r.Obj;
+                        }
+                        else
+                        {
+                            $(".btn-easy").show();
+                            if (r.Message != null)
+                            {
+                                alert(r.Message);
+                            }
+                            else
+                            {
+                                alert("暂时无法提交,请您稍后重试!");
+                            }
+                        }
+                    }
+                });
+                _StopAutoBook();
+                _ShowError("秒杀开始");
+            }
+        }
+    }
+    oImg.src = 'http://jprice.360buyimg.com/price/gp' + _id + '-1-1-1.png?' + time.getTime();
+
+    document.getElementById("_autoBook").innerHTML = "正在查询：<br />" + time.toLocaleString();
 }
 
 function _CheckResult(str)
 {
-	if(_oldPrice == 0)
-	{
-		_oldPrice = _GetPrice(str);
-	}
-	else
-	{
-		var price = _GetPrice(str);
-		if(price < _oldPrice && _isStarted == false)
-		{
-			_isStarted = true;
-        	clearInterval(_intervalProcess);
-        	$.ajax(
+    if (_oldPrice == 0)
+    {
+        _oldPrice = _GetPrice(str);
+    }
+    else
+    {
+        var price = _GetPrice(str);
+        if (price < _oldPrice && _isStarted == false)
+        {
+            _isStarted = true;
+            clearInterval(_intervalProcess);
+            $.ajax(
             {
-            	url: "http://buy.360buy.com/purchase/flows/easybuy/FlowService.ashx",
+                url: "http://buy.360buy.com/purchase/flows/easybuy/FlowService.ashx",
                 type: "get",
                 data: {
-                	action: "SubmitOrderByDefaultTemplate",
+                    action: "SubmitOrderByDefaultTemplate",
                     skuId: _id,
                     num: $("#pamount").val()
                 },
                 dataType: "jsonp",
                 success: function (r)
                 {
-                	if (r.Flag)
+                    if (r.Flag)
                     {
-                    	window.location = r.Obj;
+                        window.location = r.Obj;
                     }
                     else
-                 	{
-                     	$(".btn-easy").show();
-                     	if (r.Message != null)
-                     	{
-                         	alert(r.Message);
-                     	}
-                     	else
-                     	{
-                         	alert("暂时无法提交,请您稍后重试!");
-                     	}
-                 	}
-             	}
-        	});
-		}
-	}
+                    {
+                        $(".btn-easy").show();
+                        if (r.Message != null)
+                        {
+                            alert(r.Message);
+                        }
+                        else
+                        {
+                            alert("暂时无法提交,请您稍后重试!");
+                        }
+                    }
+                }
+            });
+        }
+    }
 
 }
 
 function _GetPrice(str)
 {
-	var startString = '[{';
-	var endString = '}]';
-	var startPos = str.indexOf(startString);
-	var endPos = str.indexOf(endString, startPos);
-	var prices = eval('('+str.substring(startPos, endPos + 2)+')');
-	var price = 0;
-	for(i in prices)
-	{
-		if(prices[i].Wid == _id)
-		{
-			price = prices[i].WMeprice;
-			break;
-		}
-	}
-	return price;
+    var startString = '[{';
+    var endString = '}]';
+    var startPos = str.indexOf(startString);
+    var endPos = str.indexOf(endString, startPos);
+    var prices = eval('(' + str.substring(startPos, endPos + 2) + ')');
+    var price = 0;
+    for (i in prices)
+    {
+        if (prices[i].Wid == _id)
+        {
+            price = prices[i].WMeprice;
+            break;
+        }
+    }
+    return price;
 }
 
 function _Buy()
 {
-	/*
+    /*
 	$('<iframe id="_Frame"></iframe>').appendTo($('body'));
 	$('#_Frame')[0].contentDocument.onload = function(){window.location.href = 'http://cart.360buy.com/cart/splitCart/splitCart.action?rd=' + Math.random()};
 	$('#_Frame')[0].contentDocument.onreadystatechange = function(){
@@ -273,46 +298,46 @@ function _Buy()
 		}};
 	$('#_Frame')[0].src = 'http://jd2008.360buy.com/purchase/InitCart.aspx?pid=' + _id + '&pcount=' + $('#pamount').val() + '&ptype=1'
 	*/
-	$.ajax(
+    $.ajax(
+    {
+        url: "http://cart.360buy.com/cart/addSkuToCart.action?rd=" + Math.random(),
+        type: "POST",
+        data: 'pid=' + _id + '&pcount=' + $('#pamount').val() + '&ptype=1&ybId=',
+        dataType: "json",
+        success: function (r)
+        {
+            if (r.success)
             {
-            	url: "http://cart.360buy.com/cart/addSkuToCart.action?rd=" + Math.random(),
-                type: "POST",
-                data: 'pid='+_id+'&pcount='+$('#pamount').val()+'&ptype=1&ybId=',
-                dataType: "json",
-                success: function (r)
+                window.location.href = 'http://cart.360buy.com/cart/splitCart/splitCart.action?rd=' + Math.random();
+            }
+            else
+            {
+                $(".btn-easy").show();
+                if (r.Message != null)
                 {
-                	if (r.success)
-                    {
-                    	window.location.href = 'http://cart.360buy.com/cart/splitCart/splitCart.action?rd=' + Math.random();
-                    }
-                    else
-                 	{
-                     	$(".btn-easy").show();
-                     	if (r.Message != null)
-                     	{
-                         	alert(r.Message);
-                     	}
-                     	else
-                     	{
-                         	alert("暂时无法提交,请您稍后重试!");
-                     	}
-                 	}
-             	}
-        	});
+                    alert(r.Message);
+                }
+                else
+                {
+                    alert("暂时无法提交,请您稍后重试!");
+                }
+            }
+        }
+    });
 }
 
 function _InitPage(str, div)
 {
-	var start = str.indexOf('"valItemInfo"');
-	var strItemInfo = str.substring(start, str.indexOf('\n', start));
-	var lis = div.getElementsByTagName("li");
-	for(li in lis)
-	{
-		lis[li].onclick = function()
-		{
-			this.style.fontWeight = "bold";
-		}
-	}
+    var start = str.indexOf('"valItemInfo"');
+    var strItemInfo = str.substring(start, str.indexOf('\n', start));
+    var lis = div.getElementsByTagName("li");
+    for (li in lis)
+    {
+        lis[li].onclick = function ()
+        {
+            this.style.fontWeight = "bold";
+        }
+    }
 }
 
 function _StopAutoBook()
@@ -325,16 +350,16 @@ function _StopAutoBook()
 
 function _AutoBook()
 {
-	var url = location.href;
-	var arr = url.split('/');
-	var page = arr[arr.length - 1];
-	_id = page.split('.')[0];
-	var intTime = document.getElementById("_txtInt").value;
-	_isStarted = true;
-	_isLoad = true;
-	_ShowError("");
+    var url = location.href;
+    var arr = url.split('/');
+    var page = arr[arr.length - 1];
+    _id = page.split('.')[0];
+    var intTime = document.getElementById("_txtInt").value;
+    _isStarted = true;
+    _isLoad = true;
+    _ShowError("");
     clearInterval(_intervalProcess);
-	_intervalProcess = setInterval(_BookCheck, intTime);
+    _intervalProcess = setInterval(_BookCheck, intTime);
 }
 
 function _TaobaoSet(el, htmlCode)
@@ -362,7 +387,7 @@ function _TaobaoSet(el, htmlCode)
     }
 }
 
-if(!document.getElementById('_Crack360Buy'))
+if (!document.getElementById('_Crack360Buy'))
 {
     _360BuyInit();
 }
