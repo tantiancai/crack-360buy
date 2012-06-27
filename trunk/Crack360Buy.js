@@ -16,7 +16,7 @@ function _360BuyInit()
     var agt = navigator.userAgent.toLowerCase();
     _is_ie = (agt.indexOf("msie") != -1 && document.all);
     var h = '';
-    h += '<div id="_Crack360Buy">V3.0.4';
+    h += '<div id="_Crack360Buy">V3.0.5';
     h += '<div>';
     h += ' <form id="_book" onsubmit="return false;">';
     h += '    时间间隔（ms）：<input id="_txtInt" type="text" size="4" value="100" />';
@@ -179,36 +179,14 @@ function _BookCheck()
             if (_imgData != data)
             {
                 //秒杀开始
-                $.ajax(
+                if($('#easybuy')[0])
                 {
-                    url: "http://buy.360buy.com/purchase/flows/easybuy/FlowService.ashx",
-                    type: "get",
-                    data: {
-                        action: "SubmitOrderByDefaultTemplate",
-                        skuId: _id,
-                        num: $("#pamount").val()
-                    },
-                    dataType: "jsonp",
-                    success: function (r)
-                    {
-                        if (r.Flag)
-                        {
-                            window.location = r.Obj;
-                        }
-                        else
-                        {
-                            $(".btn-easy").show();
-                            if (r.Message != null)
-                            {
-                                alert(r.Message);
-                            }
-                            else
-                            {
-                                alert("暂时无法提交,请您稍后重试!");
-                            }
-                        }
-                    }
-                });
+                	$('#easybuy').click();
+                }
+                else
+                {
+                	window.location.href = 'http://gate.360buy.com/InitCart.aspx?pid=' + _id + '&pcount=' + $("#pamount").val() + '&ptype=1';
+                }
                 _StopAutoBook();
                 _ShowError("秒杀开始");
             }
@@ -288,42 +266,6 @@ function _GetPrice(str)
 
 function _Buy()
 {
-    /*
-	$('<iframe id="_Frame"></iframe>').appendTo($('body'));
-	$('#_Frame')[0].contentDocument.onload = function(){window.location.href = 'http://cart.360buy.com/cart/splitCart/splitCart.action?rd=' + Math.random()};
-	$('#_Frame')[0].contentDocument.onreadystatechange = function(){
-		if (!this.readyState || this.readyState === "loaded" || this.readyState === "complete")
-		{
-			window.location.href = 'http://cart.360buy.com/cart/splitCart/splitCart.action?rd=' + Math.random();
-		}};
-	$('#_Frame')[0].src = 'http://jd2008.360buy.com/purchase/InitCart.aspx?pid=' + _id + '&pcount=' + $('#pamount').val() + '&ptype=1'
-	*/
-    $.ajax(
-    {
-        url: "http://cart.360buy.com/cart/addSkuToCart.action?rd=" + Math.random(),
-        type: "POST",
-        data: 'pid=' + _id + '&pcount=' + $('#pamount').val() + '&ptype=1&ybId=',
-        dataType: "json",
-        success: function (r)
-        {
-            if (r.success)
-            {
-                window.location.href = 'http://cart.360buy.com/cart/splitCart/splitCart.action?rd=' + Math.random();
-            }
-            else
-            {
-                $(".btn-easy").show();
-                if (r.Message != null)
-                {
-                    alert(r.Message);
-                }
-                else
-                {
-                    alert("暂时无法提交,请您稍后重试!");
-                }
-            }
-        }
-    });
 }
 
 function _InitPage(str, div)
