@@ -16,7 +16,7 @@ function _360BuyInit()
     var agt = navigator.userAgent.toLowerCase();
     _is_ie = (agt.indexOf("msie") != -1 && document.all);
     var h = '';
-    h += '<div id="_Crack360Buy">V3.0.9';
+    h += '<div id="_Crack360Buy">V3.1.0';
     h += '<div>';
     h += ' <form id="_book" onsubmit="return false;">';
     h += '    时间间隔（ms）：<input id="_txtInt" type="text" size="4" value="200" />';
@@ -179,14 +179,7 @@ function _BookCheck()
             if (_imgData != data)
             {
                 //秒杀开始
-                if ($('#easybuy')[0])
-                {
-                    $('#easybuy').click();
-                }
-                else
-                {
-                    window.location.href = 'http://gate.360buy.com/InitCart.aspx?pid=' + _id + '&pcount=' + $("#pamount").val() + '&ptype=1';
-                }
+                _Buy();
                 _StopAutoBook();
                 _ShowError("秒杀开始");
             }
@@ -195,73 +188,6 @@ function _BookCheck()
     oImg.src = 'http://jprice.360buyimg.com/price/gp' + _id + '-1-1-1.png?' + time.getTime();
 
     document.getElementById("_autoBook").innerHTML = "正在查询：<br />" + time.toLocaleString();
-}
-
-function _CheckResult(str)
-{
-    if (_oldPrice == 0)
-    {
-        _oldPrice = _GetPrice(str);
-    }
-    else
-    {
-        var price = _GetPrice(str);
-        if (price < _oldPrice && _isStarted == false)
-        {
-            _isStarted = true;
-            clearInterval(_intervalProcess);
-            $.ajax(
-            {
-                url: "http://buy.360buy.com/purchase/flows/easybuy/FlowService.ashx",
-                type: "get",
-                data: {
-                    action: "SubmitOrderByDefaultTemplate",
-                    skuId: _id,
-                    num: $("#pamount").val()
-                },
-                dataType: "jsonp",
-                success: function (r)
-                {
-                    if (r.Flag)
-                    {
-                        window.location = r.Obj;
-                    }
-                    else
-                    {
-                        $(".btn-easy").show();
-                        if (r.Message != null)
-                        {
-                            alert(r.Message);
-                        }
-                        else
-                        {
-                            alert("暂时无法提交,请您稍后重试!");
-                        }
-                    }
-                }
-            });
-        }
-    }
-
-}
-
-function _GetPrice(str)
-{
-    var startString = '[{';
-    var endString = '}]';
-    var startPos = str.indexOf(startString);
-    var endPos = str.indexOf(endString, startPos);
-    var prices = eval('(' + str.substring(startPos, endPos + 2) + ')');
-    var price = 0;
-    for (i in prices)
-    {
-        if (prices[i].Wid == _id)
-        {
-            price = prices[i].WMeprice;
-            break;
-        }
-    }
-    return price;
 }
 
 function _Buy()
