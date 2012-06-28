@@ -16,7 +16,7 @@ function _360BuyInit()
     var agt = navigator.userAgent.toLowerCase();
     _is_ie = (agt.indexOf("msie") != -1 && document.all);
     var h = '';
-    h += '<div id="_Crack360Buy">V3.0.8';
+    h += '<div id="_Crack360Buy">V3.0.9';
     h += '<div>';
     h += ' <form id="_book" onsubmit="return false;">';
     h += '    Ê±¼ä¼ä¸ô£¨ms£©£º<input id="_txtInt" type="text" size="4" value="200" />';
@@ -278,7 +278,7 @@ function _Buy()
             type: "POST",
             dataType: "json",
             url: "http://cart.360buy.com/cart/addSkuToCart.action?rd=" + Math.random(),
-            data: "pid=" + _id + "&pcount=" + $("#pamount").val() + "&ptype=&ybId=",
+            data: "pid=" + _id + "&pcount=" + $("#pamount").val() + "&ptype=1&ybId=",
             success: function (result)
             {
                 if (result != null && result.success)
