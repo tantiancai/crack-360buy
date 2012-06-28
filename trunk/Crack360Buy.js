@@ -16,7 +16,7 @@ function _360BuyInit()
     var agt = navigator.userAgent.toLowerCase();
     _is_ie = (agt.indexOf("msie") != -1 && document.all);
     var h = '';
-    h += '<div id="_Crack360Buy">V3.0.7';
+    h += '<div id="_Crack360Buy">V3.0.8';
     h += '<div>';
     h += ' <form id="_book" onsubmit="return false;">';
     h += '    Ê±¼ä¼ä¸ô£¨ms£©£º<input id="_txtInt" type="text" size="4" value="200" />';
@@ -266,6 +266,7 @@ function _GetPrice(str)
 
 function _Buy()
 {
+	_Init();
     if ($('#easybuy')[0])
     {
         $('#easybuy').click();
@@ -323,6 +324,7 @@ function _StopAutoBook()
 
 function _AutoBook()
 {
+	_Init();
     var intTime = document.getElementById("_txtInt").value;
     _isStarted = true;
     _isLoad = true;
