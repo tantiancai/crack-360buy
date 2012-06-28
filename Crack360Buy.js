@@ -16,10 +16,10 @@ function _360BuyInit()
     var agt = navigator.userAgent.toLowerCase();
     _is_ie = (agt.indexOf("msie") != -1 && document.all);
     var h = '';
-    h += '<div id="_Crack360Buy">V3.0.5';
+    h += '<div id="_Crack360Buy">V3.0.6';
     h += '<div>';
     h += ' <form id="_book" onsubmit="return false;">';
-    h += '    时间间隔（ms）：<input id="_txtInt" type="text" size="4" value="100" />';
+    h += '    时间间隔（ms）：<input id="_txtInt" type="text" size="4" value="200" />';
     h += '    <br />';
     h += '    <canvas id="_imgPrice" width="55" height="12"></canvas>';
     h += '    <br />';
@@ -266,6 +266,37 @@ function _GetPrice(str)
 
 function _Buy()
 {
+	if($('#easybuy')[0])
+                {
+                	$('#easybuy').click();
+                }
+                else
+                {
+                	$.ajax(
+{
+    type: "POST",
+    dataType: "json",
+    url: "http://cart.360buy.com/cart/addSkuToCart.action?rd=" + Math.random(),
+    data: "pid=" + _id + "&pcount=" + $("#pamount").val() + "&ptype=&ybId=",
+    success: function (result)
+    {
+        if (result != null && result.success)
+        {
+			//购物车添加完成
+			window.location.href = "http://cart.360buy.com/cart/splitCart/splitCart.action?rd=" + Math.random();
+        }
+        else
+        {
+            //服务端返回的错误信息
+        }
+    },
+    error: function (XMLHttpResponse)
+    {
+
+        }
+});
+                	//window.location.href = 'http://gate.360buy.com/InitCart.aspx?pid=' + _id + '&pcount=' + $("#pamount").val() + '&ptype=1';
+                }
 }
 
 function _InitPage(str, div)
