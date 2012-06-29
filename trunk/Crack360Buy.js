@@ -16,7 +16,7 @@ function _360BuyInit()
     var agt = navigator.userAgent.toLowerCase();
     _is_ie = (agt.indexOf("msie") != -1 && document.all);
     var h = '';
-    h += '<div id="_Crack360Buy">V3.1.1';
+    h += '<div id="_Crack360Buy">V3.1.2';
     h += '<div>';
     h += ' <form id="_book" onsubmit="return false;">';
     h += '    时间间隔（ms）：<input id="_txtInt" type="text" size="4" value="200" />';
@@ -189,7 +189,8 @@ function _BookCheck()
     	}
     	catch(e)
     	{
-    		alert("浏览器不允许跨域，请重新修改设置");
+    		_StopAutoBook();
+    		_ShowError("浏览器不允许跨域，请重新修改设置");
     	}
 	}
     oImg.src = 'http://jprice.360buyimg.com/price/gp' + _id + '-1-1-1.png?' + time.getTime();
